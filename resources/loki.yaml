@@ -41,5 +41,5 @@ spec:
   capacity:
     storage: 10Gi
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: ebs
+  storageClassName: gp2
   volumeMode: Filesystem

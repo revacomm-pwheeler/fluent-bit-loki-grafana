@@ -1,6 +1,6 @@
 persistence:
   enabled: true
-  storageClassName: ebs
+  storageClassName: gp2
   selector:
     matchLabels:
       app.kubernetes.io/name: loki
