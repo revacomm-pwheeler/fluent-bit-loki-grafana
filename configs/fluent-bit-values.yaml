@@ -1,0 +1,52 @@
+logLevel: info
+extraVolumes:
+  - hostPath:
+      path: /var/log/flb-storage/
+      type: DirectoryOrCreate
+    name: flb-storage
+extraVolumeMounts:
+  - mountPath: /var/log/flb-storage/
+    name: flb-storage
+config:
+  ## https://docs.fluentbit.io/manual/pipeline/inputs
+  inputs: |
+    [INPUT]
+        Name            tail
+        Tag             kube.*
+        Path            /var/log/containers/*.log
+        Parser          docker
+        DB              /var/log/flb-storage/flb_kube.db
+        Skip_Long_Lines On
+  ## https://docs.fluentbit.io/manual/pipeline/filters
+  filters: |
+    [FILTER]
+        Name      kubernetes
+        Match     kube.*
+        Merge_Log Off
+        Keep_Log  On
+        # Disable pod annotation configuration overrides
+        K8S-Logging.Parser  Off
+        K8S-Logging.Exclude Off
+  ## https://docs.fluentbit.io/manual/pipeline/outputs
+  outputs: |
+    [OUTPUT]
+        name                   loki
+        match                  kube.*
+        host                   loki.logging.svc.cluster.local
+        port                   3100
+        auto_kubernetes_labels off
+        labels                 job=fluent-bit, stream=$stream, container=$kubernetes['container_name'], node=$kubernetes['host'], instance=$kubernetes['pod_name'], namespace=$kubernetes['namespace_name'], labels=$kubernetes['labels']
+        remove_keys            kubernetes
+        # network configuration
+        net.dns.mode               TCP
+        net.connect_timeout        5
+        net.keepalive              on
+        net.keepalive_idle_timeout 10
+  ## https://docs.fluentbit.io/manual/pipeline/parsers
+  customParsers: |
+    [PARSER]
+        Name        docker
+        Format      json
+        Time_Key    time
+        Time_Format %Y-%m-%dT%H:%M:%S.%L
+        Time_Keep   On

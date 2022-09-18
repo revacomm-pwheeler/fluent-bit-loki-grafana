@@ -1,0 +1,45 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: loki-git
+  namespace: example
+spec:
+  interval: 1m0s
+  url: https://github.com/grafana/helm-charts.git
+  ref:
+    tag: loki-2.13.1
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: example
+spec:
+  targetNamespace: logging
+  releaseName: loki
+  interval: 2m
+  chart:
+    spec:
+      chart: './charts/loki'
+      sourceRef:
+        kind: GitRepository
+        name: loki-git
+        namespace: example
+  valuesFrom:
+    - name: loki-values
+      kind: ConfigMap
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: loki-storage-volume
+  labels:
+    app.kubernetes.io/name: loki
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ebs
+  volumeMode: Filesystem

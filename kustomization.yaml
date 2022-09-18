@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: example
+
+resources:
+  - bootstrap.yaml
+  - ./resources/fluent-bit.yaml
+  - ./resources/grafana.yaml
+  - ./resources/loki.yaml
+
+configMapGenerator:
+  - name: fluent-bit-values
+    files:
+      - values.yaml=configs/fluent-bit-values.yaml
+  - name: grafana-values
+    files:
+      - values.yaml=configs/grafana-values.yaml
+  - name: loki-values
+    files:
+      - values.yaml=configs/loki-values.yaml

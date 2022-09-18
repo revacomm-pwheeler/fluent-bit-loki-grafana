@@ -1,0 +1,30 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: grafana-git
+  namespace: example
+spec:
+  interval: 1m0s
+  url: https://github.com/grafana/helm-charts.git
+  ref:
+    tag: grafana-6.32.17
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: example
+spec:
+  targetNamespace: monitoring
+  releaseName: grafana
+  dependsOn:
+    - name: loki
+      namespace: example
+  interval: 2m
+  chart:
+    spec:
+      chart: './charts/grafana'
+      sourceRef:
+        kind: GitRepository
+        name: grafana-git
+        namespace: example

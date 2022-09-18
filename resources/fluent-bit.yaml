@@ -1,0 +1,33 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: fluent-bit-git
+  namespace: example
+spec:
+  interval: 1m0s
+  url: https://github.com/fluent/helm-charts.git
+  ref:
+    tag: fluent-bit-0.20.4
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: fluent-bit
+  namespace: example
+spec:
+  targetNamespace: logging
+  releaseName: fluent-bit
+  dependsOn:
+    - name: loki
+      namespace: example
+  interval: 2m
+  chart:
+    spec:
+      chart: './charts/fluent-bit'
+      sourceRef:
+        kind: GitRepository
+        name: fluent-bit-git
+        namespace: example
+  valuesFrom:
+    - name: fluent-bit-values
+      kind: ConfigMap

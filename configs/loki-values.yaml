@@ -1,0 +1,6 @@
+persistence:
+  enabled: true
+  storageClassName: ebs
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: loki

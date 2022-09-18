@@ -1,0 +1,3 @@
+# start with a default flux deployment
+resources:
+  - flux.yaml
