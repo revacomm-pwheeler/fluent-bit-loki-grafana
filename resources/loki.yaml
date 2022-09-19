@@ -18,6 +18,8 @@ spec:
   targetNamespace: logging
   releaseName: loki
   interval: 2m
+  install:
+    createNamespace: true
   chart:
     spec:
       chart: './charts/loki'

@@ -21,6 +21,8 @@ spec:
     - name: loki
       namespace: example
   interval: 2m
+  install:
+    createNamespace: true
   chart:
     spec:
       chart: './charts/grafana'
