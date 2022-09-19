@@ -8,6 +8,9 @@ resources:
   - ./resources/grafana.yaml
   - ./resources/loki.yaml
 
+configurations:
+  - kustomizeconfig.yaml
+
 configMapGenerator:
   - name: fluent-bit-values
     files:
