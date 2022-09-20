@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: example
+  name: random-log-generator
+  labels:
+    app: logspam
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: logspam
+  template:
+    metadata:
+      labels:
+        app: logspam
+    spec:
+      containers:
+      - name: logspam
+        image: chentex/random-logger
+        # Generate between 2 and 10 log messages per second
+        args: [ "100", "500" ]
+        # set relatively high resource requests so that scaling this deployment up will eventually
+        # scale the cluster up.
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 500Mi
+
