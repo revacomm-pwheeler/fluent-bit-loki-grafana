@@ -38,10 +38,10 @@ config:
         labels                 job=fluent-bit, stream=$stream, container=$kubernetes['container_name'], node=$kubernetes['host'], instance=$kubernetes['pod_name'], namespace=$kubernetes['namespace_name'], labels=$kubernetes['labels']
         remove_keys            kubernetes
         # network configuration
-        net.dns.mode               TCP
-        net.connect_timeout        5
-        net.keepalive              on
-        net.keepalive_idle_timeout 10
+        # net.dns.mode               TCP
+        # net.connect_timeout        5
+        # net.keepalive              on
+        # net.keepalive_idle_timeout 10
   ## https://docs.fluentbit.io/manual/pipeline/parsers
   customParsers: |
     [PARSER]
