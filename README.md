@@ -2,7 +2,7 @@ This is a very basic Fluent Bit, Loki, Grafana logging stack with a demonstratio
 
 ## Deployment
 
-1. Create a Kubernetes cluster with a StorageClass named `gp2` (this is the default for an Amazon EKS cluster).
+1. Create a Kubernetes 1.21 cluster, using the docker container runtime, with a StorageClass named `gp2` (this is the default for an Amazon EKS cluster).
 2. Deploy flux: `kustomize build ./flux | kubectl create -f -`
 3. Run `kustomize build . | kubectl create -f -`
 
