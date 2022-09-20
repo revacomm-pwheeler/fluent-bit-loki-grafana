@@ -1,7 +1,7 @@
 datasources:
   datasources.yaml:
     apiVersion: 1
-    datasource:
+    datasources:
     - name: Loki
       type: loki
       access: proxy
