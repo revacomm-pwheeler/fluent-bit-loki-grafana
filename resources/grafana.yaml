@@ -7,7 +7,7 @@ spec:
   interval: 1m0s
   url: https://github.com/grafana/helm-charts.git
   ref:
-    tag: grafana-6.32.17
+    tag: grafana-6.38.5
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease

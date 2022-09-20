@@ -17,6 +17,6 @@ The logs available in Loki fall further and further behind (you can see this by 
 ## Dependencies
 
  * Flux v0.32.0
- * [Loki Helm Chart](https://github.com/grafana/helm-charts/tree/loki-2.13.1/charts/loki) v2.13.1 (App Version 2.6.0)
- * [Fluent Bit Helm Chart](https://github.com/fluent/helm-charts/tree/fluent-bit-0.20.4/charts/fluent-bit) v0.20.4 (App Version 1.9.6)
- * [Grafana Helm Chart](https://github.com/grafana/helm-charts/tree/grafana-6.32.17/charts/grafana) v6.32.17 (App Version 9.0.5)
+ * [Loki Helm Chart](https://github.com/grafana/helm-charts/tree/loki-2.16.0/charts/loki) v2.16.0 (App Version 2.6.1)
+ * [Fluent Bit Helm Chart](https://github.com/fluent/helm-charts/tree/fluent-bit-0.20.8/charts/fluent-bit) v0.20.8 (App Version 1.9.8)
+ * [Grafana Helm Chart](https://github.com/grafana/helm-charts/tree/grafana-6.38.5/charts/grafana) v6.38.5 (App Version 9.1.5)
