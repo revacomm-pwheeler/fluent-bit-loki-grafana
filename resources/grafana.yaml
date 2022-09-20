@@ -30,3 +30,6 @@ spec:
         kind: GitRepository
         name: grafana-git
         namespace: example
+  valuesFrom:
+    - name: grafana-values
+      kind: ConfigMap
