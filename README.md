@@ -16,6 +16,9 @@ The logs available in Loki fall further and further behind (you can see this by 
 
 ## Dependencies
 
+ * Kubernetes 1.21
+ * CoreDNS
+ * kube-proxy
  * Flux v0.32.0
  * [Loki Helm Chart](https://github.com/grafana/helm-charts/tree/loki-2.16.0/charts/loki) v2.16.0 (App Version 2.6.1)
  * [Fluent Bit Helm Chart](https://github.com/fluent/helm-charts/tree/fluent-bit-0.20.8/charts/fluent-bit) v0.20.8 (App Version 1.9.8)
