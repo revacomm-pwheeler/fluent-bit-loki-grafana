@@ -4,6 +4,7 @@ namespace: example
 
 resources:
   - bootstrap.yaml
+  - ./resources/metrics-server.yaml
   - ./resources/fluent-bit.yaml
   - ./resources/grafana.yaml
   - ./resources/loki.yaml
@@ -22,3 +23,6 @@ configMapGenerator:
   - name: loki-values
     files:
       - values.yaml=configs/loki-values.yaml
+  - name: metrics-server-values
+    files:
+      - values.yaml=configs/metrics-server-values.yaml
