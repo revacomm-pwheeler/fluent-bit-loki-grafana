@@ -1,3 +1,6 @@
+image:
+  repository: ghcr.io/revacomm-pwheeler/fluent-bit-grafana-loki
+  tag: latest
 logLevel: info
 extraVolumes:
   - hostPath:
@@ -8,6 +11,18 @@ extraVolumeMounts:
   - mountPath: /var/log/flb-storage/
     name: flb-storage
 config:
+  service: |
+    [SERVICE]
+        Daemon Off
+        Flush {{ .Values.flush }}
+        Log_Level {{ .Values.logLevel }}
+        Parsers_File parsers.conf
+        Parsers_File custom_parsers.conf
+        HTTP_Server On
+        HTTP_Listen 0.0.0.0
+        HTTP_Port {{ .Values.metricsPort }}
+        Health_Check On
+        Plugins_File /fluent-bit/etc/plugins.conf
   ## https://docs.fluentbit.io/manual/pipeline/inputs
   inputs: |
     [INPUT]
@@ -42,6 +57,19 @@ config:
         # net.connect_timeout        5
         # net.keepalive              on
         # net.keepalive_idle_timeout 10
+    
+    [OUTPUT]
+        Name                 grafana-loki
+        Match                kube.*
+        Url                  http://loki.logging.svc.cluster.local:3100/api/prom/push
+        BatchWait            1
+        BatchSize            1048576
+        Labels               {job="grafana"}
+        RemoveKeys           kubernetes
+        AutoKubernetesLabels false
+        LabelMapPath         /fluent-bit/etc/labelmap.json
+        LineFormat           json
+        LogLevel             warn
   ## https://docs.fluentbit.io/manual/pipeline/parsers
   customParsers: |
     [PARSER]
@@ -50,3 +78,19 @@ config:
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
+
+  extraFiles:
+    labelmap.json: |
+      {
+        "kubernetes": {
+          "container_name": "container",
+          "host": "node",
+          "labels": "labels",
+          "namespace_name": "namespace",
+          "pod_name": "instance"
+        },
+        "stream": "stream"
+      }
+    plugins.conf: |
+      [PLUGINS]
+          Path /usr/lib/out_grafana_loki.so
