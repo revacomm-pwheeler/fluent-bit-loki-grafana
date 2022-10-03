@@ -23,6 +23,6 @@ RUN git clone https://github.com/grafana/loki.git .
 RUN git checkout v2.6.1
 RUN make fluent-bit-plugin
 
-FROM cr.fluentbit.io/fluent/fluent-bit:1.9.8
+FROM ghcr.io/revacomm-pwheeler/fluent-bit-loki-grafana/fluent-bit:1.9.6-debug-loki-5
 
 COPY --from=plugin-build /src/loki/clients/cmd/fluent-bit/out_grafana_loki.so /usr/lib/
