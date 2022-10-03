@@ -52,6 +52,7 @@ config:
         auto_kubernetes_labels off
         labels                 job=fluent-bit, stream=$stream, container=$kubernetes['container_name'], node=$kubernetes['host'], instance=$kubernetes['pod_name'], namespace=$kubernetes['namespace_name'], labels=$kubernetes['labels']
         remove_keys            kubernetes
+        workers                1
         # network configuration
         # net.dns.mode               TCP
         # net.connect_timeout        5
