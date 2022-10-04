@@ -1,6 +1,7 @@
 image:
   repository: ghcr.io/revacomm-pwheeler/fluent-bit-loki-grafana/fluent-bit
-  tag: out_loki_enable_multiplex
+  tag: out_loki_enable_multiplex_valgrind
+command: ["tail", "-f", "/dev/null"]
 logLevel: debug
 extraVolumes:
   - hostPath:
