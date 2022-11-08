@@ -4,7 +4,6 @@ namespace: example
 
 resources:
   - bootstrap.yaml
-  - ./resources/metrics-server.yaml
   - ./resources/fluent-bit.yaml
   - ./resources/grafana.yaml
   - ./resources/loki.yaml
